@@ -1,0 +1,150 @@
+% !TeX program = xelatex
+% GDUT academic layout samples. Replace bracketed fields with sourced content.
+% This file contains no claimed research findings or measured performance data.
+\documentclass[aspectratio=169,11pt]{beamer}
+\input{profile.tex}
+\input{config.tex}
+\hypersetup{pdftitle={\mytitle},pdfauthor={\myauthor},pdfsubject={广东工业大学学术汇报模板}}
+\begin{document}
+\DrawCoverPage
+\DrawTOC{研究背景,研究方法,实验分析,总结展望}
+
+\section{研究背景}
+\begin{frame}{研究背景与问题}
+  \textbf{研究主题}\par
+  [用一至两句话说明研究对象、应用场景与待解决的问题。]
+  \vspace{.25cm}
+  \begin{itemize}
+    \setlength{\itemsep}{.7em}
+    \item 应用需求：[填写应用场景与实际需求]
+    \item 现有不足：[填写与文献对应的问题]
+    \item 研究目标：[填写可以验证的研究目标]
+  \end{itemize}
+\end{frame}
+
+\section{研究方法}
+\begin{frame}{方法分析与结构图}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.43\textwidth}
+      \textbf{核心思路}\par
+      \begin{itemize}
+        \setlength{\itemsep}{.7em}
+        \item 输入：[数据形式与尺寸]
+        \item 处理：[核心模块及其作用]
+        \item 输出：[预测结果或表征]
+      \end{itemize}
+      \vspace{.3cm}
+      [说明设计动机及与基线方法的联系。]
+    \end{column}
+    \begin{column}{.52\textwidth}
+      \ImagePlaceholder[3.5cm]{方法结构图\\替换为原始矢量图或高清图}
+      {\small\color{muted}图 1\quad [结构图名称与来源]}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{公式与变量说明}
+  [在此简述公式的作用与适用条件。]
+  \BehindEqBox{$\displaystyle \mathcal{L}=\mathcal{L}_{\mathrm{task}}+\lambda\mathcal{L}_{\mathrm{reg}}$}
+  \begin{tabular}{@{}ll@{}}
+    $\mathcal{L}_{\mathrm{task}}$ & [任务损失的定义] \\[.35em]
+    $\mathcal{L}_{\mathrm{reg}}$  & [正则项的定义] \\[.35em]
+    $\lambda$                  & [权重系数与选择依据]
+  \end{tabular}\par
+  \vspace{.2cm}
+  {\small\color{muted}此式仅为排版示例，使用时替换为实际方法公式。}
+\end{frame}
+
+\begin{frame}[fragile]{算法与实现流程}
+  \begin{algorithm}[H]
+    \caption{算法排版示例}
+    \KwIn{[输入数据]， [配置参数]}
+    \KwOut{[输出结果]}
+    [初始化状态]\;
+    \For{[满足迭代条件]}{
+      [读取或采样输入]\;
+      [执行核心计算]\;
+      [更新状态]\;
+    }
+    \Return{[输出结果]}\;
+  \end{algorithm}
+  \vspace{.2cm}
+  {\small\color{muted}[补充实现设置、停止条件或复杂度说明。]}
+\end{frame}
+
+\section{实验分析}
+\begin{frame}{实验设置与对比结果}
+  [填写数据集、划分、评价指标与公平对比条件。]
+  \vspace{.35cm}
+  \begin{center}
+  \ThreeLineTable{\begin{tabular}{lccc}
+    \toprule
+    方法 & 指标一 $\uparrow$ & 指标二 $\downarrow$ & 参数量 \\
+    \midrule
+    基线方法 & 待填写 & 待填写 & 待填写 \\
+    对比方法 & 待填写 & 待填写 & 待填写 \\
+    本文方法 & 待填写 & 待填写 & 待填写 \\
+    \bottomrule
+  \end{tabular}}
+  \end{center}
+  \vspace{.25cm}
+  {\small\color{muted}[填写数据来源、单位与比较范围。]}
+\end{frame}
+
+\begin{frame}{可视化结果对比}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.31\textwidth}
+      \ImagePlaceholder[2.9cm]{[输入图像]}
+      \centering\small 输入
+    \end{column}
+    \begin{column}{.31\textwidth}
+      \ImagePlaceholder[2.9cm]{[基线结果]}
+      \centering\small 基线方法
+    \end{column}
+    \begin{column}{.31\textwidth}
+      \ImagePlaceholder[2.9cm]{[本文结果]}
+      \centering\small 本文方法
+    \end{column}
+  \end{columns}
+  \vspace{.45cm}
+  \textbf{观察：}[填写图像可以直接支持的现象与比较条件。]
+\end{frame}
+
+\begin{frame}{关键发现与局限}
+  \begin{block}{关键发现}
+    [填写有实验数据支持的主要发现，并指向对应图表。]
+  \end{block}
+  \begin{alertblock}{适用边界}
+    [填写失败情形、数据局限或尚待验证的条件。]
+  \end{alertblock}
+  \begin{exampleblock}{后续验证}
+    [填写能够检验解释或假设的下一步实验。]
+  \end{exampleblock}
+\end{frame}
+
+\section{总结展望}
+\begin{frame}{总结与后续工作}
+  \textbf{本次汇报}\par
+  [用一句话总结本次工作与主要证据。]
+  \vspace{.35cm}
+  \begin{enumerate}
+    \setlength{\itemsep}{.8em}
+    \item 已完成：[填写本阶段已完成的工作]
+    \item 待解决：[填写当前关键问题]
+    \item 下一步：[填写计划与预计完成时间]
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{参考文献}
+  \begin{enumerate}
+    \setlength{\itemsep}{1em}
+    \item {[作者]. [论文标题]. [期刊或会议], [年份].}
+    \item {[作者]. [论文标题]. [期刊或会议], [年份].}
+    \item {[作者或机构]. [数据集或代码名称]. [版本与链接].}
+  \end{enumerate}
+  \vspace{.45cm}
+  {\small\color{muted}[使用真实且已核对的文献替换以上字段。]}
+\end{frame}
+
+\DrawThanksPage
+\end{document}

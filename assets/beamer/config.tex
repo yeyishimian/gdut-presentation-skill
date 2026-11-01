@@ -1,0 +1,166 @@
+% GDUT adaptation of GrokCV/TemplateNKU (master, retrieved 2026-11-01).
+% Upstream authors: 谢孔伟、程明明、戴一冕. https://github.com/GrokCV/TemplateNKU
+% Retained design grammar: banner cover, red/white TOC, fine title rule,
+% segmented footer, academic tables/equations/algorithm, minimal closing page.
+% Reworked for GDUT identity, separate profile, font fallback and safer spacing.
+% Official emblem/wordmark: https://photo.gdut.edu.cn/info/1324/1992.htm
+% Screen red #C30D23 matches official artwork; print CMYK 15/100/90/10.
+\usepackage{fontspec,xeCJK,unicode-math}
+\usepackage{amsmath,booktabs,array,tikz,etoolbox,xparse}
+\usepackage[most]{tcolorbox}
+\usepackage[ruled,linesnumbered,vlined]{algorithm2e}
+\usetikzlibrary{calc,backgrounds}
+
+% Portable fonts: use installed fonts, then TeX Live's bundled Fandol fonts.
+\newcommand{\SetENFont}[1]{\setmainfont{#1}\setsansfont{#1}}
+\newcommand{\SetCNFont}[1]{\setCJKmainfont{#1}\setCJKsansfont{#1}}
+\newcommand{\SetMathFontConfig}[1]{\setmathfont{#1}}
+\newcommand{\GDUTSansCN}{%
+  \IfFontExistsTF{Noto Sans CJK SC}{\SetCNFont{Noto Sans CJK SC}}{%
+  \IfFontExistsTF{Microsoft YaHei}{\SetCNFont{Microsoft YaHei}}{%
+  \SetCNFont{FandolHei-Regular.otf}}}}
+\newcommand{\GDUTSerifCN}{%
+  \IfFontExistsTF{Noto Serif CJK SC}{\SetCNFont{Noto Serif CJK SC}}{%
+  \IfFontExistsTF{SimSun}{\SetCNFont{SimSun}}{\SetCNFont{FandolSong-Regular.otf}}}}
+\newcommand{\ThemeBlackSans}{%
+  \IfFontExistsTF{Arial}{\SetENFont{Arial}}{\SetENFont{TeX Gyre Heros}}%
+  \GDUTSansCN\setmathfont{TeX Gyre Termes Math}}
+\newcommand{\ThemeSongRoman}{%
+  \IfFontExistsTF{Times New Roman}{\SetENFont{Times New Roman}}{\SetENFont{TeX Gyre Termes}}%
+  \GDUTSerifCN\setmathfont{TeX Gyre Termes Math}}
+\newcommand{\UseHeiRomanFont}{%
+  \IfFontExistsTF{Times New Roman}{\SetENFont{Times New Roman}}{\SetENFont{TeX Gyre Termes}}%
+  \GDUTSansCN\setmathfont{TeX Gyre Termes Math}}
+\ThemeBlackSans
+
+\definecolor{gdutred}{HTML}{C30D23}
+\definecolor{gdutdark}{HTML}{960A1B}
+\definecolor{gdutpale}{HTML}{FBEFF1}
+\definecolor{ink}{HTML}{252525}
+\definecolor{muted}{HTML}{666666}
+\definecolor{mygreen}{HTML}{33745B}
+\definecolor{myorange}{HTML}{A96625}
+\colorlet{myred}{gdutred}
+% Compatibility aliases for older TemplateNKU content; all resolve to GDUT.
+\colorlet{lightpurple}{gdutred}
+\colorlet{midpurple}{gdutred}
+\colorlet{darkpurple}{gdutdark}
+\colorlet{mypurple}{gdutdark}
+\colorlet{myitem}{ink}
+\setbeamercolor{normal text}{fg=ink,bg=white}
+\setbeamercolor{structure}{fg=gdutred}
+\setbeamercolor{alerted text}{fg=gdutred}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamersize{text margin left=0.65cm,text margin right=0.65cm}
+\setbeamerfont{normal text}{size=\normalsize}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamertemplate{frametitle}{%
+  \vspace{0.16cm}%
+  \begin{beamercolorbox}[wd=\textwidth,ht=0.55cm,dp=0.08cm]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}%
+  {\color{gdutred}\rule{\textwidth}{0.65pt}}\vspace{0.08cm}}
+\setbeamercolor{frametitle}{fg=ink,bg=white}
+
+% Actual-height footer reserves space in the flow instead of overlaying content.
+\setbeamertemplate{footline}{%
+  \leavevmode\hbox{%
+  \begin{beamercolorbox}[wd=.30\paperwidth,ht=.29cm,dp=.10cm,center]{gdut footer side}
+    \usebeamerfont{footline}\myauthor\quad \myuniversity
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.60\paperwidth,ht=.29cm,dp=.10cm,center]{gdut footer middle}
+    \usebeamerfont{footline}\myshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.10\paperwidth,ht=.29cm,dp=.10cm,center]{gdut footer side}
+    \usebeamerfont{footline}\insertframenumber
+  \end{beamercolorbox}}}
+\setbeamerfont{footline}{size=\tiny}
+\setbeamercolor{gdut footer side}{fg=white,bg=gdutred}
+\setbeamercolor{gdut footer middle}{fg=white,bg=gdutdark}
+\setbeamertemplate{itemize item}{\color{gdutred}\small\textbullet}
+\setbeamertemplate{itemize subitem}{\color{gdutred}\scriptsize\textbullet}
+\newcommand{\useSmallCircleItem}{\setbeamertemplate{itemize item}{\color{gdutred}\small\textbullet}}
+\newcommand{\useBigCircleItem}{\setbeamertemplate{itemize item}{\color{gdutred}\large\textbullet}}
+\setbeamertemplate{caption}[numbered]
+\setbeamerfont{caption}{size=\small}
+\setbeamercolor{caption name}{fg=gdutred}
+\renewcommand{\figurename}{图}
+\setlength{\parskip}{0.45em}
+
+\newcommand{\DrawCoverPage}{%
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north,inner sep=0pt] at ([yshift=-0.45cm]current page.north)
+      {\includegraphics[width=5.25cm]{brand/gdut-horizontal-cropped.pdf}};
+    \fill[gdutred] ([yshift=1.65cm]current page.west) rectangle ([yshift=-1.15cm]current page.east);
+    \draw[gdutred,line width=.5pt] ([yshift=1.79cm]current page.west) -- ([yshift=1.79cm]current page.east);
+    \draw[gdutred,line width=.5pt] ([yshift=-1.29cm]current page.west) -- ([yshift=-1.29cm]current page.east);
+    \node[text=white,align=center,text width=.88\paperwidth,font=\fontsize{27}{34}\selectfont\bfseries]
+      at ([yshift=.48cm]current page.center) {\mytitle};
+    \node[text=white,align=center,text width=.88\paperwidth,font=\small]
+      at ([yshift=-.61cm]current page.center) {\mysubtitle};
+    \node[draw=gdutred,rounded corners=.35cm,line width=.6pt,minimum height=.66cm,inner xsep=.6cm,font=\large]
+      at ([yshift=-2.02cm]current page.center) {\myauthor};
+    \node[align=center,font=\small,text=muted] at ([yshift=-2.79cm]current page.center)
+      {\mycollege\qquad 指导教师：\myadvisor};
+    \node[anchor=south,font=\small,text=muted] at ([yshift=.34cm]current page.south) {\mydate};
+  \end{tikzpicture}
+\end{frame}}
+
+% A compact 2--6 item TOC. For longer agendas, split into more than one page.
+\newcounter{toccount}
+\newcommand{\DrawTOC}[2][1]{%
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[gdutred] (current page.south west) rectangle ([xshift=3.7cm]current page.north west);
+    \node[text=white,align=center,font=\fontsize{27}{34}\selectfont\bfseries]
+      at ([xshift=1.85cm]current page.west) {汇报\\提纲};
+    \node[text=white,font=\scriptsize] at ([xshift=1.85cm,yshift=-1.55cm]current page.west) {CONTENTS};
+    \setcounter{toccount}{0}\foreach \x in {#2}{\stepcounter{toccount}}
+    \pgfmathsetmacro{\tocstep}{min(1.45,6.2/max(1,\thetoccount))}
+    \foreach \x [count=\xi] in {#2}{%
+      \pgfmathsetmacro{\tocy}{(\thetoccount-1)*\tocstep/2-(\xi-1)*\tocstep}
+      \ifnum\xi=#1\relax
+        \node[fill=gdutred,text=white,text width=9cm,minimum height=.88cm,align=left,inner xsep=.35cm,font=\large\bfseries]
+          at ([xshift=1.7cm,yshift=\tocy cm]current page.center) {\xi\quad\x};
+      \else
+        \node[fill=gdutpale,text=muted,text width=9cm,minimum height=.88cm,align=left,inner xsep=.35cm,font=\large]
+          at ([xshift=1.7cm,yshift=\tocy cm]current page.center) {\xi\quad\x};
+      \fi}
+  \end{tikzpicture}
+\end{frame}}
+\newcommand{\DrawListTOC}[2][1]{\DrawTOC[#1]{#2}}
+
+\newcommand{\ThreeLineTable}[1]{{\small\renewcommand{\arraystretch}{1.45}\setlength{\tabcolsep}{12pt}#1}}
+\newcommand{\PlainTable}[1]{\ThreeLineTable{#1}}
+\newcommand{\cornerfootnote}[1]{\footnote{#1}}
+\newcommand{\cornernote}[1]{\footnote{#1}}
+\pgfkeys{/BehindEqBox/.is family,/BehindEqBox,color/.initial=gdutred,border/.initial=.6pt,style/.initial=solid,padding/.initial=3mm}
+\NewDocumentCommand{\BehindEqBox}{O{} m}{%
+  \begingroup\pgfkeys{/BehindEqBox,#1}%
+  \begin{center}\begin{tcolorbox}[width=.90\textwidth,colback=\pgfkeysvalueof{/BehindEqBox/color}!5,colframe=\pgfkeysvalueof{/BehindEqBox/color}!35,boxrule=\pgfkeysvalueof{/BehindEqBox/border},arc=1.5mm,boxsep=\pgfkeysvalueof{/BehindEqBox/padding}]
+  \centering #2\end{tcolorbox}\end{center}\endgroup}
+
+\newtcolorbox{gdutblock}[2]{colback=#1!6,colframe=#1,colbacktitle=#1,coltitle=white,title=#2,fonttitle=\normalsize\bfseries,boxrule=.4pt,arc=1mm,left=3mm,right=3mm,top=2mm,bottom=2mm,before skip=2.5mm,after skip=2.5mm}
+\renewenvironment{block}[1]{\begin{gdutblock}{gdutred}{#1}}{\end{gdutblock}}
+\renewenvironment{alertblock}[1]{\begin{gdutblock}{gdutdark}{#1}}{\end{gdutblock}}
+\renewenvironment{exampleblock}[1]{\begin{gdutblock}{mygreen}{#1}}{\end{gdutblock}}
+\SetKwInput{KwIn}{输入}\SetKwInput{KwOut}{输出}
+\SetAlgorithmName{算法}{算法}{算法列表}
+\SetAlCapFnt{\small}\SetAlFnt{\small}
+\SetArgSty{textnormal}
+
+\newcommand{\ImagePlaceholder}[2][3cm]{%
+  \begin{tikzpicture}\node[draw=muted!40,fill=black!3,text=muted,minimum width=\linewidth,minimum height=#1,align=center,font=\small] {#2};\end{tikzpicture}}
+\newcommand{\DrawThanksPage}{%
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[white] (current page.south west) rectangle (current page.north east);
+    \node[fill=white,inner sep=4mm,circle] at ([yshift=1.9cm]current page.center)
+      {\includegraphics[height=1.35cm]{brand/gdut-emblem-cropped.pdf}};
+    \node[text=gdutred,font=\fontsize{34}{44}\selectfont\bfseries] at ([yshift=-.1cm]current page.center) {感谢聆听};
+    \node[text=gdutred,font=\large] at ([yshift=-1.13cm]current page.center) {欢迎批评指正};
+    \node[text=gdutred,font=\small] at ([yshift=-2.55cm]current page.center) {\myauthor\qquad\myuniversity};
+  \end{tikzpicture}
+\end{frame}}
